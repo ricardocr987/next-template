@@ -1,7 +1,7 @@
-import '../styles/globals.css'
-import { Layout }  from "../components"
+import "../styles/globals.css";
+import { Layout } from "../components";
 import dynamic from "next/dynamic";
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
 import { ConnectionProvider } from "@solana/wallet-adapter-react";
 
 // set custom RPC server endpoint for the final website
@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </Layout>
       </WalletProvider>
     </ConnectionProvider>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

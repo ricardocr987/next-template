@@ -1,6 +1,6 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import { HomeView } from '../views'
+import type { NextPage } from "next";
+import Head from "next/head";
+import { HomeView } from "../views";
 
 const Home: NextPage = () => {
   return (
@@ -10,9 +10,9 @@ const Home: NextPage = () => {
         <meta name="description" content="My personal website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HomeView/>
+      <HomeView />
     </>
-  )
-}
+  );
+};
 
 export default Home;

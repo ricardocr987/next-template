@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-}
+};
 module.exports = {
   images: {
-    domains: ['www.arweave.net'],
+    domains: ["www.arweave.net"],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
