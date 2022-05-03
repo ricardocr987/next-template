@@ -28,18 +28,18 @@ export const Sidebar = ({NavItems, sidebar, showSidebar}: NavProps) => {
                     </div>
                 )}
                 <div className={styles.social_links}>
-                    <ul className={styles.row}>
-                        <li>
+                    <div className={styles.row}>
+                        <div className={styles.column}>
                             <a href="https://twitter.com/Riki__sol">
                                 <i><FaTwitter /></i>
                             </a>
-                        </li>
-                        <li>
+                        </div>
+                        <div className={styles.column}>
                             <a href="https://github.com/ricardocr987">
                                 <i><FaGithub /></i>
                             </a>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
