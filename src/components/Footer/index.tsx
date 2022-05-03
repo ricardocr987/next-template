@@ -2,7 +2,7 @@ import { FaTwitter, FaGithub } from 'react-icons/fa'
 import styles from '../../styles/components/Footer.module.css'
 
 export const Footer = () => {
-return (
+    return (
         <div className={styles.color__section}> 
             <div className={styles.row}>
                 <div className={styles.column}>
@@ -19,5 +19,3 @@ return (
         </div>
     );
 }
-
-export default Footer;

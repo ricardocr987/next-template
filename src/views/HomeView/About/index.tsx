@@ -1,6 +1,6 @@
-import styles from '../../../styles/pages/About.module.css'
+import styles from '../../../styles/views/About.module.css'
 
-export default function About() {
+export const About = () => {
     return(
         <div className={styles.about_container}>
             <div className={styles.about_left}>

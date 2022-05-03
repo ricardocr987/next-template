@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Link from "next/link";
 import { FaBars } from 'react-icons/fa'
 import Sidebar from "../Sidebar";
-import ConnectWallet from "./connectWallet";
+import { ConnectWallet } from "../";
 import styles from '../../styles/components/Navbar.module.css'
 
 interface NavProps{
@@ -51,7 +51,9 @@ export const Navbar = ({NavItems}: NavProps) => {
               <div className={styles.nav_item} key={route.label}>
                 <div className={styles.nav_links}>
                   <Link href={`/${route.name}`}>
-                    {route.label}
+                    <a>
+                      {route.label}
+                    </a>
                   </Link>
                 </div>
               </div>

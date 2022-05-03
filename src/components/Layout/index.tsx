@@ -1,5 +1,5 @@
-import Footer from '../Footer'
-import Navbar from '../Navbar';
+import { Footer } from '../Footer'
+import { Navbar } from '../Navbar';
 
 const NavItems = [
   { label: 'Articles', ref: 'articles' },
@@ -11,7 +11,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function AppLayout ({ children }: LayoutProps) {
+export const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Navbar NavItems={NavItems}/>

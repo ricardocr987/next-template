@@ -1,20 +1,20 @@
 import { Connection, clusterApiUrl, PublicKey, AccountInfo, ParsedAccountData,  } from '@solana/web3.js';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { TOKEN_PROGRAM_ID, AccountLayout } from "@solana/spl-token";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import bs58 from 'bs58';
 import axios from 'axios';
 import { programs, MetadataJson } from '@metaplex/js';
 const { metadata: { Metadata, MetadataData } } = programs;
 import Image from 'next/image'
-import styles from '../../../styles/pages/MyNFTs.module.css'
-
+import styles from '../../../styles/views/MyNFTs.module.css'
+import { ConnectWallet } from '../../../components'
 interface Account{
     pubkey: PublicKey;
     account: AccountInfo<Buffer | ParsedAccountData>;
 }
 
-export default function MyNFTs() {
+export const MyNFTs = () => {
     const wallet = useWallet();
     const connection = new Connection(clusterApiUrl('mainnet-beta'));
     const [images, setImages] = useState<string[]>([]);
@@ -92,39 +92,42 @@ export default function MyNFTs() {
         return urlImages; 
     }
 
-    useEffect(() => { // start a fetch request by calling getUris() after the initial mounting
-        async function getNFTImages() {
+    const getImages =  useCallback(async () => {
             if(wallet.publicKey){
-                const walletAddress = wallet.publicKey.toString();
-                const token_accounts: Account[] = await getTokenAccounts(walletAddress); // we get the list of token accunts pubkeys of NFTs
+                const token_accounts: Account[] = await getTokenAccounts(wallet.publicKey.toString()); // we get the list of token accunts pubkeys of NFTs
                 const mints: PublicKey[] = await getMint(token_accounts); // we get the mint address from the token account
                 const uris: string[] = await getUris(mints); // we get the uri from metadata account using the mint address as part of seeds
                 const images: string[] = await getImagesURL(uris);
 
                 setImages(images); // when request completes, setUris updates uris state with the just fetched uris array
             }
-        };
-        getNFTImages();
-    }, []) // if this state changes, it makes render the page another time
+        }, [])
+
+    useEffect(() => { // start a fetch request by calling getUris() after the initial mounting
+        getImages();
+    }, [wallet.publicKey, getImages]) // if this state changes, it makes render the page another time
 
     return(
-        <div className={styles.nfts_container}>
-            <div className={styles.nfts_background}>
-                <h1>This is a simple test to paginate and show the connected wallet NFTs</h1>
-                {wallet.connected ?
-                    <div className={styles.row_nfts}>
-                        {images.map((image: string) => 
-                            <div className={styles.col_nfts} key={image}>
-                                <Image className={styles.NFT} src={image} alt='undefined'/>
-                            </div>
-                        )}
-                    </div>
-                :
-                    <div> 
-                        Connect the fucking wallet
-                    </div>
-                }
+        <>
+            <div className={styles.nfts_container}>
+                <div className={styles.nfts_background}>
+                    <h1>This is a simple test to paginate and show the connected wallet NFTs</h1>
+                    {wallet.connected ?
+                        <div className={styles.row_nfts}>
+                            {images.map((image: any) => 
+                                <div className={styles.col_nfts} key={image}>
+                                    <Image className={styles.NFT} src={image} alt='undefined' height='20px' width='20px'/>
+                                </div>
+                            )}
+                        </div>
+                    :
+                        <div> 
+                            CONNECT THE FUCKING WALLET
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
+            <ConnectWallet/>
+        </>
     )
 } 

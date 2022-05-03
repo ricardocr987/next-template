@@ -1,8 +1,8 @@
-import styles from '../../styles/pages/Home.module.css'
-import About from './About'
-import MyNFTs from './MyNFTs'
+import styles from '../../styles/views/Home.module.css'
+import { About } from './About'
+import { MyNFTs } from './MyNFTs'
 
-export default function Home() {
+export const HomeView = () => {
     return(
         <>
             <div className={styles.home_container}>
