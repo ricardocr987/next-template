@@ -1,30 +1,55 @@
 import "../styles/globals.css";
 import { Layout } from "../components";
-import dynamic from "next/dynamic";
 import type { AppProps } from "next/app";
-import { ConnectionProvider } from "@solana/wallet-adapter-react";
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import {
+    GlowWalletAdapter,
+    PhantomWalletAdapter,
+    SlopeWalletAdapter,
+    SolflareWalletAdapter,
+    TorusWalletAdapter,
+} from '@solana/wallet-adapter-wallets';
+import { clusterApiUrl } from '@solana/web3.js';
+import { FC, useMemo } from 'react';
 
-// set custom RPC server endpoint for the final website
-// const endpoint = "https://explorer-api.devnet.solana.com";
-// const endpoint = "http://127.0.0.1:8899";
-const endpoint = "https://ssc-dao.genesysgo.net";
-const WalletProvider = dynamic(
-  () => import("../contexts/ClientWalletProvider"),
-  {
-    ssr: false,
-  }
-);
+// Use require instead of import since order matters
+require('@solana/wallet-adapter-react-ui/styles.css');
+require('../styles/globals.css');
 
-function MyApp({ Component, pageProps }: AppProps) {
+const App: FC<AppProps> = ({ Component, pageProps }) => {
+  // Can be set to 'devnet', 'testnet', or 'mainnet-beta'
+  const network = WalletAdapterNetwork.Mainnet;
+
+  // You can also provide a custom RPC endpoint
+  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+
+  // @solana/wallet-adapter-wallets includes all the adapters but supports tree shaking and lazy loading --
+  // Only the wallets you configure here will be compiled into your application, and only the dependencies
+  // of wallets that your users connect to will be loaded
+  const wallets = useMemo(
+      () => [
+          new PhantomWalletAdapter(),
+          new GlowWalletAdapter(),
+          new SlopeWalletAdapter(),
+          new SolflareWalletAdapter({ network }),
+          new TorusWalletAdapter(),
+      ],
+      [network]
+  );
   return (
     <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </WalletProvider>
-    </ConnectionProvider>
+      <WalletProvider wallets={wallets}>
+          <WalletModalProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </WalletModalProvider>
+        </WalletProvider>
+      </ConnectionProvider>
   );
 }
 
-export default MyApp;
+export default App;
+
