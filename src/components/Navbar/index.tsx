@@ -5,6 +5,7 @@ import { ConnectWallet } from "../";
 import styles from "../../styles/components/Navbar.module.css";
 import { Button } from 'degen';
 import Link from 'next/link';
+import { Tooltip } from '@mui/material'
 
 interface NavProps {
   NavItems: { label: string; url: string, key: number, comingSoon?: boolean }[];
@@ -47,21 +48,23 @@ export const Navbar = ({ NavItems }: NavProps) => {
           <div className={styles.nav_menu}>
             {NavItems.map(route => {
               return route.comingSoon ? (
-                <div className={styles.nav_item} key={route.label}>
-                  <div className={styles.nav_links}>
-                    <Button
-                      as="a"
-                      variant="transparent"
-                      disabled={route.comingSoon}
-                      size="small"
-                      width="full"
-                      justifyContent="flex-start"
-                      key={route.key}
-                    >
-                      {route.label}
-                    </Button>
+                <Tooltip title="Coming Soon" placement="bottom" arrow>
+                  <div className={styles.nav_item} key={route.label}>
+                    <div className={styles.nav_links}>
+                      <Button
+                        as="a"
+                        variant="transparent"
+                        disabled={route.comingSoon}
+                        size="small"
+                        width="full"
+                        justifyContent="flex-start"
+                        key={route.key}
+                      >
+                        {route.label}
+                      </Button>
+                    </div>
                   </div>
-                </div>
+                </Tooltip>
               ) : (
                 <div className={styles.nav_item} key={route.label}>
                   <div className={styles.nav_links}>
@@ -73,7 +76,7 @@ export const Navbar = ({ NavItems }: NavProps) => {
                         width="full"
                         justifyContent="flex-start"
                       >
-                          <a>{route.label}</a>
+                          {route.label}
                       </Button>
                     </Link>
                   </div>
