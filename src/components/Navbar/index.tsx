@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { FaBars } from "react-icons/fa";
 import Sidebar from "../Sidebar";
 import { ConnectWallet } from "../";
 import styles from "../../styles/components/Navbar.module.css";
+import { Button } from 'degen';
+import Link from 'next/link';
 
 interface NavProps {
-  NavItems: { label: string; ref: string }[];
+  NavItems: { label: string; url: string, key: number, comingSoon?: boolean }[];
 }
 
 export const Navbar = ({ NavItems }: NavProps) => {
@@ -44,15 +45,41 @@ export const Navbar = ({ NavItems }: NavProps) => {
           </div>
 
           <div className={styles.nav_menu}>
-            {NavItems.map((route: any) => (
-              <div className={styles.nav_item} key={route.label}>
-                <div className={styles.nav_links}>
-                  <Link href={`/${route.name}`}>
-                    <a>{route.label}</a>
-                  </Link>
+            {NavItems.map(route => {
+              return route.comingSoon ? (
+                <div className={styles.nav_item} key={route.label}>
+                  <div className={styles.nav_links}>
+                    <Button
+                      as="a"
+                      variant="transparent"
+                      disabled={route.comingSoon}
+                      size="small"
+                      width="full"
+                      justifyContent="flex-start"
+                      key={route.key}
+                    >
+                      {route.label}
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ) : (
+                <div className={styles.nav_item} key={route.label}>
+                  <div className={styles.nav_links}>
+                    <Link href={route.url} passHref>
+                      <Button
+                        as="a"
+                        variant="transparent"
+                        size="small"
+                        width="full"
+                        justifyContent="flex-start"
+                      >
+                          <a>{route.label}</a>
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              );
+              })}
           </div>
           <div className={styles.connect_wallet}>
             <ConnectWallet />

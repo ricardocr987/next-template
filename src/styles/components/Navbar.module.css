@@ -60,7 +60,7 @@
 
 .nav_links {
   position: relative;
-  width: 160%;
+  width: 120%;
   height: 45px;
   display: flex;
   justify-content: center;
@@ -69,10 +69,10 @@
   color: #fff;
   font-weight: 500;
   font-size: 24px;
-  padding: 5px 0;
   text-transform: uppercase;
   transition: 0.3s;
   overflow: hidden;
+  text-decoration: none;
 }
 
 .nav_links:hover {
