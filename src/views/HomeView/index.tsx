@@ -1,6 +1,5 @@
 import styles from "../../styles/views/Home.module.css";
 import { About } from "./About";
-import { MyNFTs } from "./MyNFTs";
 
 export const HomeView = () => {
   return (
@@ -17,7 +16,6 @@ export const HomeView = () => {
         </div>
       </div>
       <About />
-      <MyNFTs />
     </>
   );
 };

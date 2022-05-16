@@ -19,6 +19,7 @@ export const Navbar = ({ NavItems }: NavProps) => {
   useEffect(() => {
     window.addEventListener("scroll", changeBackground);
   });
+  
   const changeBackground = () => {
     if (window.scrollY >= 80) {
       setNavbar(true);
